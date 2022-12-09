@@ -6,15 +6,15 @@ public class MovementWithoutSwordState : State
 {
     public void OnStateEntered(PlayerStateManager stateManager)
     {
-        throw new System.NotImplementedException();
+        
     }
     public void Tick(PlayerStateManager stateManager, float deltaTime)
     {
-        throw new System.NotImplementedException();
+        stateManager.PlayerMovementHandler.movePlayer(this);
     }
     public void OnStateExited(PlayerStateManager stateManager)
     {
-        throw new System.NotImplementedException();
+       
     }
 
     
