@@ -23,6 +23,10 @@ public class PlayerMovementHandler : MonoBehaviour
         CharacterController=GetComponent<CharacterController>();
         Camera = Camera.main;
     }
+    private void FixedUpdate()
+    {
+        addGravity();
+    }
     public void movePlayer(State currentState)
     {
         if(currentState== PlayerStateManager.state_MovementWithoutSword)
@@ -34,16 +38,31 @@ public class PlayerMovementHandler : MonoBehaviour
             Speed = speedWithSword;
         }
         Vector3 direction = PlayerStateManager.InputHandler.Direction;
-        direction=  direction.x* getNormalizedRightDirectionOfCamera()+direction.z*getNormalizedForwardDirectionOfCamera();
+        PlayerStateManager.PlayerAnimationManager.setFloatValue(PlayerStateManager.PlayerAnimationManager.ForwardBackWardString, direction.z);
+        PlayerStateManager.PlayerAnimationManager.setFloatValue(PlayerStateManager.PlayerAnimationManager.LeftRightString, direction.x);
+        direction =  direction.x* getNormalizedRightDirectionOfCamera()+direction.z*getNormalizedForwardDirectionOfCamera();
+        direction.y = 0;
          if (direction != Vector3.zero)
         {
 
             CharacterController.Move(direction * Time.deltaTime*Speed);
            
             transform.rotation = Quaternion.LookRotation(direction*Time.deltaTime);
-            
         }
+        
 
+
+
+    }
+    private void addGravity()
+    {
+        if(CharacterController.isGrounded)
+        {
+            return;
+
+        }
+        Vector3 gravity = new Vector3(0, -9.8f * Time.deltaTime, 0);
+        CharacterController.Move(gravity);
     }
     private Vector3 getNormalizedForwardDirectionOfCamera()
     {

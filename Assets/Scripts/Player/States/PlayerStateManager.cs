@@ -11,6 +11,7 @@ public class PlayerStateManager : MonoBehaviour
    public JumpState state_Jump { get;private set; }
    public InputHandler InputHandler { get;private set; }
    public PlayerMovementHandler PlayerMovementHandler { get;private set; }
+    public PlayerAnimationManager PlayerAnimationManager { get;private set; }
     private void Awake()
     {
         state_MovementWithoutSword = new MovementWithoutSwordState();
@@ -24,6 +25,7 @@ public class PlayerStateManager : MonoBehaviour
     {
         InputHandler = GetComponent<InputHandler>();
         PlayerMovementHandler = GetComponent<PlayerMovementHandler>();
+        PlayerAnimationManager = GetComponent<PlayerAnimationManager>();
         CurrentState.OnStateEntered(this);
         
     }
